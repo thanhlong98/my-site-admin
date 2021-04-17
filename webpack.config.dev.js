@@ -1,7 +1,9 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
-require('dotenv').config({ path: __dirname + '/.env.development' })
+const dotenv = require('dotenv').config({ path: __dirname + '/.env.development' })
 
 module.exports = {
   mode: 'development',
@@ -17,8 +19,10 @@ module.exports = {
       chunks: 'all'
     }
   },
+  devtool: 'inline-source-map',
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
+    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
+    plugins: [new TsconfigPathsPlugin()]
   },
   module: {
     rules: [
@@ -39,6 +43,9 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(dotenv.parsed) // it will automatically pick up key values from .env file
+    }),
     new HtmlWebpackPlugin({
       inject: true,
       template: path.join(__dirname, 'public', 'index.html'),
@@ -48,6 +55,7 @@ module.exports = {
     })
   ],
   devServer: {
+    historyApiFallback: true,
     contentBase: path.resolve(__dirname, 'dist'),
     host: '0.0.0.0',
     compress: true,
