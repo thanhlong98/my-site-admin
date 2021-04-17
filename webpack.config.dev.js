@@ -1,7 +1,11 @@
 const path = require('path')
+const fs = require('fs')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+const WebpackBar = require('webpackbar')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 const dotenv = require('dotenv').config({ path: __dirname + '/.env.development' })
 
@@ -37,14 +41,39 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
-        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
+        test: /\.less$|\.css$/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          {
+            loader: 'less-loader',
+            options: {
+              lessOptions: {
+                javascriptEnabled: true
+              },
+              additionalData: content => {
+                const lessVarsFile = path.resolve('./src/styles/antd-theme.less')
+
+                if (fs.existsSync(lessVarsFile)) {
+                  content = `${content}\n@import '${lessVarsFile}';`
+                }
+
+                return content
+              }
+            }
+          }
+        ]
       }
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(),
+    new WebpackBar(),
     new webpack.DefinePlugin({
       'process.env': JSON.stringify(dotenv.parsed) // it will automatically pick up key values from .env file
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      async: false
     }),
     new HtmlWebpackPlugin({
       inject: true,

@@ -1,10 +1,10 @@
 interface IRoute {
-  page: string
-  exact?: boolean
+  feature: string
   path: string
+  exact?: boolean
 }
 
-type RestrictedRoute = 'login'
+type RestrictedRoute = 'login' | 'register'
 /**
  * @description
  * Dinh nghia nhung route chi nhung nguoi chua dang nhap moi xem duoc
@@ -14,20 +14,31 @@ type RestrictedRoute = 'login'
  */
 export const restrictedRoutes: Readonly<Record<RestrictedRoute, IRoute>> = {
   login: {
-    page: 'Login',
+    feature: 'Auth/pages/Login',
     exact: true,
     path: '/login'
+  },
+  register: {
+    feature: 'Auth/pages/Register',
+    exact: true,
+    path: '/register'
   }
 }
 
-type PublicRoute = string
+type PublicRoute = 'home'
 
 /**
  * @description
  * Ding nghia nhung route cho ca nhung nguoi chua dang nhap va nhung nguoi da
  * dang nhap co the xem duoc
  */
-export const publicRoutes: Readonly<Record<PublicRoute, IRoute>> = {}
+export const publicRoutes: Readonly<Record<PublicRoute, IRoute>> = {
+  home: {
+    feature: 'Intro/pages/Home',
+    path: '/',
+    exact: true
+  }
+}
 
 export type ProtectedRoute = 'dashboard' | 'interview'
 
@@ -39,12 +50,12 @@ export type ProtectedRoute = 'dashboard' | 'interview'
  */
 export const protectedRoutes: Readonly<Record<ProtectedRoute, IRoute>> = {
   dashboard: {
-    page: 'Dashboard',
+    feature: 'Intro/pages/Dashboard',
     path: '/dashboard',
     exact: true
   },
   interview: {
-    page: 'Interview',
+    feature: 'Interview',
     path: '/interview',
     exact: true
   }

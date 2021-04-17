@@ -1,8 +1,8 @@
-import { switchAuthen } from '@/store'
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { switchAuthen } from '../../authSlice'
 
-const Login: React.FC = () => {
+const LoginPage: React.FC = () => {
   const dispatch = useDispatch()
 
   const handleSubmit = async () => {
@@ -11,9 +11,9 @@ const Login: React.FC = () => {
 
   return (
     <div>
-      <button onClick={handleSubmit}>Login</button>
+      <button onClick={handleSubmit}>LoginPage</button>
     </div>
   )
 }
 
-export default Login
+export default LoginPage
