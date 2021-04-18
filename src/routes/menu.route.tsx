@@ -8,5 +8,9 @@ export const menuRoutes: IMenuData[] = [
   {
     title: 'Interview',
     dest: '/interview'
+  },
+  {
+    title: 'Setting',
+    dest: '/setting'
   }
 ]

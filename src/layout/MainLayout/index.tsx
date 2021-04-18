@@ -1,8 +1,8 @@
 import { Layout } from 'antd'
 import React, { useState } from 'react'
-import Footer from './Footer'
-import Header from './Header'
-import Sidebar from './Sidebar'
+import Footer from './LayoutFooter'
+import Header from './LayoutHeader'
+import Sidebar from './LayoutSidebar'
 import './styles.less'
 
 const { Content } = Layout

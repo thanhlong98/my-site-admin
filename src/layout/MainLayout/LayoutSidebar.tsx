@@ -1,8 +1,8 @@
 import { menuRoutes } from '@/routes/menu.route'
 import { Layout, Menu } from 'antd'
 import React from 'react'
-import { Link, useRouteMatch } from 'react-router-dom'
-import './Sidebar.less'
+import { Link, useLocation, useRouteMatch } from 'react-router-dom'
+import './LayoutSidebar.less'
 
 const { SubMenu } = Menu
 
@@ -11,9 +11,7 @@ type Props = {
 }
 
 const Sidebar: React.FC<Props> = () => {
-  const router = useRouteMatch()
-
-  console.log(router)
+  const { pathname } = useLocation()
 
   return (
     <Layout.Sider
@@ -25,7 +23,8 @@ const Sidebar: React.FC<Props> = () => {
       }}
     >
       <div className='logo' />
-      <Menu theme='dark' defaultSelectedKeys={[router.path]} mode='inline'>
+
+      <Menu theme='dark' defaultSelectedKeys={[pathname]} mode='inline'>
         {menuRoutes.map(menu =>
           menu.childs ? (
             <SubMenu key={menu.dest} title={menu.title}>

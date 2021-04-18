@@ -4,8 +4,6 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Redirect, Route, RouteProps } from 'react-router-dom'
 
-// A wrapper for <Route> that redirects to the dashboard
-// screen if you're already authenticated.
 export const RestrictedRouteWrapper: React.FC<RouteProps> = ({ children, ...restProps }) => {
   const isAuthenticated = useSelector<RootState>(state => state.auth.isAuthenticated)
 

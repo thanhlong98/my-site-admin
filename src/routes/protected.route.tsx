@@ -2,7 +2,7 @@ import { ProtectedRouteWrapper } from '@/components/RouterWrapper'
 import { IRoute } from '@/interfaces'
 import React from 'react'
 
-export type ProtectedRoute = 'dashboard' | 'interview'
+export type ProtectedRoute = 'dashboard' | 'interview' | 'setting'
 
 /**
  * @description
@@ -14,11 +14,16 @@ export const protectedRouteList: Readonly<Record<ProtectedRoute, IRoute>> = {
   dashboard: {
     feature: 'Intro/pages/Dashboard',
     path: '/dashboard',
-    exact: false
+    exact: true
   },
   interview: {
     feature: 'Interview',
     path: '/interview',
+    exact: false
+  },
+  setting: {
+    feature: 'Setting/pages/App',
+    path: '/setting',
     exact: false
   }
 }

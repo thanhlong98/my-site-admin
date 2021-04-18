@@ -18,16 +18,17 @@ const Routes = () => {
 
           <Route exact path='/404' component={NotFound} />
 
-          <Route
-            component={() => (
-              <MainLayout>
+          <Route>
+            <MainLayout>
+              <Suspense fallback={<Loading />}>
                 <Switch>
                   {protectedRoute}
+
                   <Redirect to='/404' />
                 </Switch>
-              </MainLayout>
-            )}
-          />
+              </Suspense>
+            </MainLayout>
+          </Route>
         </Switch>
       </Suspense>
     </BrowserRouter>
