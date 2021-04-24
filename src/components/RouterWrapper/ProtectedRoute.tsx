@@ -16,7 +16,7 @@ export const ProtectedRouteWrapper: React.FC<RouteProps> = ({ children, ...restP
         ) : (
           <Redirect
             to={{
-              pathname: restrictedRouteList.login.path,
+              pathname: restrictedRouteList[0].path,
               state: { from: location }
             }}
           />

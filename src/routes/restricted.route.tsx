@@ -1,5 +1,5 @@
 import { RestrictedRouteWrapper } from '@/components/RouterWrapper'
-import { IRoute } from '@/interfaces'
+import { IRouteItem } from '@/interfaces'
 import React from 'react'
 
 type RestrictedRoute = 'login' | 'register'
@@ -10,24 +10,27 @@ type RestrictedRoute = 'login' | 'register'
  * Vi du: /login
  * Nếu đã đăng nhập thì sẽ chuyển hướng tới trang chủ /dashboard
  */
-export const restrictedRouteList: Readonly<Record<RestrictedRoute, IRoute>> = {
-  login: {
-    feature: 'Auth/pages/Login',
-    path: '/login',
-    exact: false
-  },
-  register: {
-    feature: 'Auth/pages/Register',
-    path: '/register',
-    exact: false
-  }
-}
 
-export const restrictedRoute = Object.entries(restrictedRouteList).map(([key, route]) => {
-  const C = React.lazy(() => import(`../features/${route.feature}`))
+export const restrictedRouteList: IRouteItem[] = [
+  {
+    title: 'login',
+    path: '/login',
+    exact: true,
+    page: 'Auth/Login'
+  },
+  {
+    title: 'register',
+    path: '/register',
+    exact: true,
+    page: 'Auth/Register'
+  }
+]
+
+export const restrictedRoute = restrictedRouteList.map(route => {
+  const C = React.lazy(() => import(`../pages/${route.page}`))
 
   return (
-    <RestrictedRouteWrapper key={key} path={route.path} exact={route.exact}>
+    <RestrictedRouteWrapper key={route.path} path={route.path} exact={route.exact}>
       <C />
     </RestrictedRouteWrapper>
   )

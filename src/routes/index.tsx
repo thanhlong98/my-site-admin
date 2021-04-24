@@ -1,9 +1,9 @@
 import Loading from '@/components/Loading'
 import NotFound from '@/components/NotFound'
-import MainLayout from '@/layout/MainLayout'
+import MasterLayout from '@/layout/MasterLayout'
 import React, { Suspense } from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
-import { protectedRoute } from './protected.route'
+import { masterRoute } from './master.route'
 import { publicRoute } from './public.route'
 import { restrictedRoute } from './restricted.route'
 
@@ -19,15 +19,15 @@ const Routes = () => {
           <Route exact path='/404' component={NotFound} />
 
           <Route>
-            <MainLayout>
+            <MasterLayout>
               <Suspense fallback={<Loading />}>
                 <Switch>
-                  {protectedRoute}
+                  {masterRoute}
 
                   <Redirect to='/404' />
                 </Switch>
               </Suspense>
-            </MainLayout>
+            </MasterLayout>
           </Route>
         </Switch>
       </Suspense>

@@ -1,4 +1,4 @@
-import { protectedRouteList } from '@/routes/protected.route'
+import { masterRouteList } from '@/routes/master.route'
 import { RootState } from '@/store'
 import React from 'react'
 import { useSelector } from 'react-redux'
@@ -16,7 +16,7 @@ export const RestrictedRouteWrapper: React.FC<RouteProps> = ({ children, ...rest
         ) : (
           <Redirect
             to={{
-              pathname: protectedRouteList.dashboard.path,
+              pathname: masterRouteList[0].path,
               state: { from: location }
             }}
           />

@@ -1,0 +1,48 @@
+@import '../../styles/antd-theme.less';
+
+.login-register-page {
+  height: 100vh;
+  width: 100vw;
+  background-color: #f7f7f7;
+
+  .login-register-logo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+
+    .logo {
+      height: 50px;
+    }
+  }
+
+  .login-register-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .login-register-form {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px 15px;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      border-radius: @border-radius-base;
+      background-color: #fff;
+
+      .wrapper-form {
+        opacity: 1;
+        transition: opacity 0.4s;
+
+        .btn-login {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

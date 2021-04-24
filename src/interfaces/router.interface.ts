@@ -9,9 +9,10 @@ export interface IRoute extends RouteProps {
 export interface IRouteItem extends RouteProps {
   title: string
   titlei18n?: string
-  feature: string
+  page: string
   path: string
   icon?: JSX.Element | string
   exact?: boolean
+  isCreate?: boolean
   children?: IRouteItem[]
 }

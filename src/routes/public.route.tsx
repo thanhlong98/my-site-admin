@@ -1,27 +1,26 @@
-import { IRoute } from '@/interfaces'
-import React from 'react'
 import { PublicRouteWrapper } from '@/components/RouterWrapper'
-
-type PublicRoute = 'home'
+import { IRouteItem } from '@/interfaces'
+import React from 'react'
 
 /**
  * @description
  * Ding nghia nhung route cho ca nhung nguoi chua dang nhap va nhung nguoi da
  * dang nhap co the xem duoc
  */
-export const publicRouteList: Readonly<Record<PublicRoute, IRoute>> = {
-  home: {
-    feature: 'Intro/pages/Home',
+export const publicRouteList: IRouteItem[] = [
+  {
+    title: 'home',
     path: '/',
-    exact: true
-  }
-}
+    exact: true,
+    page: 'Home',
+  },
+]
 
-export const publicRoute = Object.entries(publicRouteList).map(([key, route]) => {
-  const C = React.lazy(() => import(`../features/${route.feature}`))
+export const publicRoute = publicRouteList.map((route) => {
+  const C = React.lazy(() => import(`../pages/${route.page}`))
 
   return (
-    <PublicRouteWrapper key={key} path={route.path} exact={route.exact}>
+    <PublicRouteWrapper key={route.path} path={route.path} exact={route.exact}>
       <C />
     </PublicRouteWrapper>
   )

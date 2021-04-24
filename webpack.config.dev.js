@@ -7,7 +7,9 @@ const WebpackBar = require('webpackbar')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
-const dotenv = require('dotenv').config({ path: __dirname + '/.env.development' })
+const dotenv = require('dotenv').config({
+  path: __dirname + '/.env.development',
+})
 
 module.exports = {
   mode: 'development',
@@ -16,17 +18,17 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
     chunkFilename: '[name].bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   optimization: {
     splitChunks: {
-      chunks: 'all'
-    }
+      chunks: 'all',
+    },
   },
   devtool: 'inline-source-map',
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
-    plugins: [new TsconfigPathsPlugin()]
+    plugins: [new TsconfigPathsPlugin()],
   },
   module: {
     rules: [
@@ -36,9 +38,13 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript']
-          }
-        }
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react',
+              '@babel/preset-typescript',
+            ],
+          },
+        },
       },
       {
         test: /\.less$|\.css$/,
@@ -49,45 +55,75 @@ module.exports = {
             loader: 'less-loader',
             options: {
               lessOptions: {
-                javascriptEnabled: true
+                javascriptEnabled: true,
               },
-              additionalData: content => {
-                const lessVarsFile = path.resolve('./src/styles/antd-theme.less')
+              additionalData: (content) => {
+                const lessVarsFile = path.resolve(
+                  './src/styles/antd-theme.less'
+                )
 
                 if (fs.existsSync(lessVarsFile)) {
                   content = `${content}\n@import '${lessVarsFile}';`
                 }
 
                 return content
-              }
-            }
-          }
-        ]
-      }
-    ]
+              },
+            },
+          },
+        ],
+      },
+      {
+        // write image files under 10k to inline or copy image files over 10k
+        test: /\.(jpg|jpeg|gif|png|svg|ico)?$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              fallback: 'file-loader',
+              name: 'images/[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        // write files under 10k to inline or copy files over 10k
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              fallback: 'file-loader',
+              name: 'fonts/[name].[ext]',
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new WebpackBar(),
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify(dotenv.parsed) // it will automatically pick up key values from .env file
+      'process.env': JSON.stringify(dotenv.parsed), // it will automatically pick up key values from .env file
     }),
     new ForkTsCheckerWebpackPlugin({
-      async: false
+      async: false,
     }),
     new HtmlWebpackPlugin({
       inject: true,
       template: path.join(__dirname, 'public', 'index.html'),
       paths: {
-        publicURL: ''
-      }
-    })
+        publicURL: '',
+      },
+    }),
   ],
   devServer: {
     historyApiFallback: true,
     contentBase: path.resolve(__dirname, 'dist'),
     host: '0.0.0.0',
     compress: true,
-    port: process.env.PORT ? parseInt(process.env.PORT) : 8080
-  }
+    port: process.env.PORT ? parseInt(process.env.PORT) : 8080,
+  },
 }
